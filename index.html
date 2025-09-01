@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Service Analyzer</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@^0.14.0",
+          "marked": "https://esm.sh/marked@^12.0.0"
+        }
+      }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Crypto Service Analyzer</h1>
+        <p>Why Isn’t Your Crypto Project Getting More Attention?<br>
+Get a free visibility audit + content playbook to fix it.</p>
+    </header>
+
+    <main>
+        <section id="analyzer-view">
+            <div id="input-container">
+                <h2>Step 1: Tell Us About Your Project</h2>
+                <p>Enter your website and your core crypto/blockchain services below.</p>
+                <input type="url" id="website-url-input" placeholder="e.g., https://mycrypto-project.com" aria-label="Your Website URL">
+                <textarea id="services-input" placeholder="e.g., DeFi Staking Platform, NFT Marketplace Development, Blockchain Consulting..." rows="5" aria-label="Your Core Services"></textarea>
+                <button id="analyze-btn">Run My Authority Playbook Generator</button>
+            </div>
+
+            <div id="loading-indicator" class="hidden" aria-live="polite">
+                <div class="spinner"></div>
+                <p id="loading-text">Preparing your analysis...</p>
+            </div>
+
+            <div id="results-container" class="hidden">
+                <!-- Gemini results will be streamed here -->
+            </div>
+            
+            <div id="cta-container" class="hidden">
+                <h2>Ready to Amplify Your Reputation & Growth?</h2>
+                <p>Get your project featured on <strong>75+ Google News approved crypto sites</strong> for an overnight boost in rankings, reputation, and traffic.</p>
+                <p class="discount">As a user of this tool, you get an exclusive <strong>30% discount</strong> on all our campaigns.</p>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="cta-button">Learn More & Claim Your Discount</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Powered by the Gemini API</p>
+    </footer>
+
+    <script type="module" src="./index.tsx"></script>
+</body>
+</html>
