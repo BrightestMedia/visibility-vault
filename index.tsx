@@ -7,7 +7,7 @@ import { marked } from 'marked';
 
 // --- CONFIGURATION ---
 // IMPORTANT: Your sales page URL goes here.
-const SALES_PAGE_URL = '../public/defi-distribution-offer.html'; 
+const SALES_PAGE_URL = 'https://visibility.brightestmoment.com/defi-distribution-offer.html'; 
 
 // --- DOM ELEMENT SELECTORS ---
 const websiteUrlInput = document.getElementById('website-url-input');
