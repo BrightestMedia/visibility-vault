@@ -144,12 +144,34 @@ async function runAnalysis(websiteUrl, services) {
 }
 
 /**
+ * Parses URL parameters and pre-fills form fields for personalized outreach.
+ */
+function parseUrlParameters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const companyUrl = urlParams.get('url');
+  const services = urlParams.get('services');
+
+  // Pre-fill website URL if provided
+  if (companyUrl && websiteUrlInput) {
+    (websiteUrlInput as HTMLInputElement).value = companyUrl;
+  }
+
+  // Pre-fill services if provided
+  if (services && servicesInput) {
+    (servicesInput as HTMLTextAreaElement).value = services;
+  }
+}
+
+/**
  * Initializes the application.
  */
 function initializeApp() {
   if (ctaButton) {
     (ctaButton as HTMLAnchorElement).href = SALES_PAGE_URL;
   }
+
+  // Parse URL parameters and pre-fill form fields
+  parseUrlParameters();
 
   analyzeBtn?.addEventListener('click', () => {
     const services = (servicesInput as HTMLTextAreaElement)?.value;

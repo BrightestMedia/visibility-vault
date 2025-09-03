@@ -12,6 +12,13 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      server: {
+        host: true,
+        fs: {
+          strict: false,
+          allow: ['..']
+        }
       }
     };
 });
