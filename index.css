@@ -173,6 +173,71 @@ button:disabled {
     margin-bottom: 0;
 }
 
+/* Enhanced formatting for Authority Blueprint section */
+#results-container strong {
+    color: #00d084;
+    font-weight: 600;
+}
+
+/* Better spacing for bullet point sections */
+#results-container p {
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+}
+
+/* Format the chain reaction bullet points */
+#results-container ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+#results-container li {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+}
+
+/* Style for the main bullet point titles */
+#results-container li strong:first-child,
+#results-container p strong:first-child {
+    color: #ffa500;
+    font-size: 1.05em;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+/* Enhanced chain reaction formatting */
+.chain-benefit {
+    margin: 1rem 0 !important;
+    padding: 0.8rem;
+    background: rgba(0, 208, 132, 0.05);
+    border-left: 3px solid #00d084;
+    border-radius: 4px;
+}
+
+.chain-bullet {
+    color: #ffa500 !important;
+    font-size: 1.1em !important;
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.chain-text {
+    color: var(--text-color);
+    line-height: 1.6;
+    display: block;
+    margin-left: 0.5rem;
+}
+
+/* Improved spacing for the "benefit of benefit" structure */
+#results-container p:contains("Initial Action:") strong,
+#results-container p:contains("Immediate Result:") strong,
+#results-container p:contains("Customer Perception:") strong,
+#results-container p:contains("AI & Algorithm Amplification:") strong,
+#results-container p:contains("Ultimate Outcome:") strong {
+    color: #00d084;
+    font-size: 1.05em;
+}
+
 #cta-container {
     border-top: 2px solid var(--primary-color);
     padding-top: 1.5rem;
