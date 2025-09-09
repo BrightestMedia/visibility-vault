@@ -1,7 +1,7 @@
 # Visibility Vault - Product Requirements Document
 **Date:** September 3, 2025  
-**Version:** 1.0.0  
-**Status:** ✅ PRODUCTION READY  
+**Version:** 1.1.0  
+**Status:** ✅ PRODUCTION READY - ENHANCED PERSONALIZATION  
 
 ## 🎯 Product Overview
 
@@ -29,15 +29,27 @@
 ## 🎨 Product Features
 
 ### 1. Dynamic Branding & Messaging
-- **App Title:** "Visibility Vault"
-- **Value Proposition:** "Which of Your Services Should You Spotlight First?"
-- **Benefit Statement:** "Get a free service audit + authority blueprint to see where to focus for maximum attention and trust."
+- **App Title:** "Who's Willing to Publish Your Project?"
+- **Value Proposition:** "Get a free crypto media audit to see which trusted outlets you can get published on (Google News, CoinDesk, Business Insider, more)."
+- **Field Prompt:** "What's your site + what do you offer in crypto?"
+- **CTA Button:** "Reveal My Media Access Map"
+- **Bonus Tip:** "🔐 This tool reveals where your project can appear — and unlocks your exclusive 30% off access."
 
-### 2. Intelligent Form Pre-filling
+### 2. Auto-Start Analysis & Enhanced Personalization
 **URL Parameter Support:**
 - `?url=https://company.com` - Pre-fills website URL field
-- `?services=service1,service2,service3` - Pre-fills services textarea
+- `?services=service1,service2,service3` - Pre-fills services textarea  
 - `?email=contact@company.com` - Captures prospect email for tracking
+
+**🆕 AUTO-START FEATURE:**
+When both `url` and `services` parameters are present, analysis begins automatically after 500ms, creating seamless personalized experience.
+
+**🆕 SERVICE SCANNING EFFECT:**
+During auto-started analysis, services are displayed one-by-one with scanning animation:
+- Format: "Scanning: **[service name]**" in highlighted blue
+- Each service displays for 0.8 seconds
+- Creates impression of intelligent service analysis
+- Transitions to regular rotating messages after scanning
 
 **Google Sheets Integration:**
 ```
@@ -45,21 +57,22 @@
 ```
 
 ### 3. AI-Powered Service Analysis
-**Primary CTA Button:** "Reveal My Highest-Impact Service"
+**🆕 Primary CTA Button:** "Reveal My Media Access Map"
 
-**Analysis Prompt Structure:**
+**🆕 Updated Analysis Prompt Structure:**
 ```typescript
 const prompt = `
-You are an expert crypto marketing strategist and brand analyst. Your mission is to create a compelling, personalized "Authority Playbook" to convince the user to focus their initial marketing efforts on a single, high-impact service.
+You are an expert crypto marketing strategist and brand analyst. Your mission is to create a compelling, personalized "Visibility Blueprint" that shows where their project deserves to be seen.
 
-### 1. Your High-Impact Service Recommendation
-State clearly which single service from their list you recommend promoting first.
+## 📡 Here's Where Your Project Deserves to Be Seen
 
-### 2. The Authority Blueprint: A Chain Reaction of Benefits
-Explain how promoting this specific service on authoritative publications creates a powerful chain reaction.
+### Your highest-impact service = [identify the most media-worthy service from their list]
+This is your "media magnet" — the most press-worthy part of your project that makes publishers say yes.
 
-### 3. Your First Step
-Conclude with a powerful, direct statement about getting published on trusted sites.
+### Your Visibility Blueprint
+We've matched this to crypto-specific Google News sites + trusted mainstream platforms like AP News, Business Insider & CoinDesk.
+
+🛡️ These placements aren't open to everyone. But they are to you (for now).
 `;
 ```
 
@@ -141,13 +154,22 @@ response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
 3. Form validation ensures both fields completed
 
 ### 3. Analysis Generation
-1. User clicks "Reveal My Highest-Impact Service"
+**🆕 Manual Start:**
+1. User clicks "Reveal My Media Access Map"  
 2. **Tracking Event:** `analysis_started` recorded
-3. Loading indicator with rotating messages:
-   - "Analyzing your website and services..."
-   - "Identifying your strategic advantage..."
-   - "Consulting market trends..."
-   - "Building your Authority Playbook..."
+3. Loading indicator with rotating messages (6-second duration):
+   - "Analyzing Market Signals & Media Openings..."
+   - "Identifying which of your services will attract the most media trust..."
+   - "Scanning crypto media to match your offer with publisher demand..."
+   - "Locating high-authority sites that would feature your brand..."
+   - "Mapping visibility pathways across 75+ crypto news outlets..."
+
+**🆕 Auto-Start (Personalized Links):**
+1. Analysis begins automatically after 500ms delay
+2. **Service Scanning Phase:** Shows "Scanning: [service]" for each service (0.8s each)
+3. **Regular Messages Phase:** Transitions to rotating analysis messages
+4. **Total Duration:** 6 seconds minimum
+5. **Tracking Event:** `analysis_started` with `autoStarted: true` flag
 
 ### 4. Results Display
 1. Streaming AI-generated content with markdown parsing
@@ -155,10 +177,13 @@ response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
 3. Three-section Authority Playbook displayed
 
 ### 5. Conversion
-1. CTA section reveals: "Ready to Amplify Your Reputation & Growth?"
-2. User clicks "Learn More & Claim Your Discount"
-3. **Tracking Event:** `cta_clicked` recorded
-4. Redirect to sales page: `https://visibility.brightestmoment.com/defi-distribution-offer.html`
+**🆕 Updated CTA Section:**
+1. CTA section reveals: "Get Featured on 75+ Crypto Outlets — with 30% Off"
+2. Description: "We've matched this to crypto-specific Google News sites + trusted mainstream platforms like AP News, Business Insider & CoinDesk."
+3. Exclusivity message: "🛡️ These placements aren't open to everyone. But they are to you (for now)."
+4. User clicks "Claim My Visibility Campaign Now"
+5. **Tracking Event:** `cta_clicked` recorded
+6. Redirect to sales page: `https://visibility.brightestmoment.com/defi-distribution-offer.html`
 
 ## 🔧 Development & Deployment
 
@@ -342,8 +367,37 @@ FROM defi_clicks;
 
 ---
 
+## 🆕 Recent Updates - Version 1.1.0
+
+### September 9, 2025 - Enhanced Personalization Update
+
+**🎯 Copy & Messaging Overhaul:**
+- Updated all three stages (Landing, Analyzing, Results) with media-focused messaging
+- Changed from "Authority Playbook" to "Visibility Blueprint" framework
+- Emphasized specific publication names (CoinDesk, Business Insider, AP News)
+- Added exclusivity messaging: "These placements aren't open to everyone"
+
+**🚀 Auto-Start Analysis Feature:**
+- Implemented seamless auto-analysis for personalized links with URL + services parameters
+- Added service scanning animation showing individual services being processed
+- Creates professional, intelligent analysis impression for prospects
+- Maintains 6-second minimum duration for optimal user experience
+
+**💫 Enhanced User Experience:**
+- Service scanning displays each service individually during auto-analysis  
+- Updated rotating messages focused on media opportunities
+- Improved visual hierarchy with better color highlighting
+- Streamlined conversion flow with urgency-focused CTAs
+
+**📊 Tracking Enhancements:**
+- Added `autoStarted: true` flag for auto-initiated analysis
+- Enhanced session tracking for personalized link performance
+- Improved analytics for A/B testing different approaches
+
+---
+
 **Document Created:** September 3, 2025  
-**Last Updated:** September 3, 2025  
-**Version:** 1.0.0  
-**Status:** ✅ Production Ready  
-**Next Review:** September 10, 2025 (Post-launch analysis)
+**Last Updated:** September 9, 2025  
+**Version:** 1.1.0  
+**Status:** ✅ Production Ready - Enhanced Personalization  
+**Next Review:** September 16, 2025 (Post-personalization analysis)

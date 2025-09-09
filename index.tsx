@@ -97,27 +97,30 @@ async function trackUserInteraction(eventType: 'analysis_started' | 'cta_clicked
  */
 function createPrompt(websiteUrl, services) {
   return `
-You are an expert crypto marketing strategist and brand analyst. Your mission is to create a compelling, personalized "Authority Playbook" to convince the user to focus their initial marketing efforts on a single, high-impact service.
+You are an expert crypto marketing strategist and brand analyst. Your mission is to create a compelling, personalized "Visibility Blueprint" that shows where their project deserves to be seen.
 
 Analyze the user's business based on their website URL (${websiteUrl}) and their list of services. Then, generate a report using Markdown with the following structure:
 
-### 1. Your High-Impact Service Recommendation
-State clearly which single service from their list you recommend promoting first. Justify your choice concisely, explaining why it's the best strategic starting point to attract high-value clients and establish market leadership in the current crypto landscape.
+## 📡 Here's Where Your Project Deserves to Be Seen
 
-### 2. The Authority Blueprint: A Chain Reaction of Benefits
-Explain how promoting this specific service on authoritative, Google News-approved crypto publications creates a powerful chain reaction of benefits. Frame this as "The Compound Effect of Brand Strength."
+### Your highest-impact service = [identify the most media-worthy service from their list]
 
-Use a "benefit of the benefit" structure. Integrate these points naturally:
-- **Initial Action:** Getting featured on trusted crypto sites and publications like USA Today or Business Insider.
-- **Immediate Result:** This triggers higher search rankings, often overnight.
-- **Customer Perception:** Potential customers searching for solutions see you as the obvious, trusted choice.
-- **AI & Algorithm Amplification:** AI platforms (like Google's SGE) begin to cite you as a trusted source, and social/search algorithms start recommending your content.
-- **Ultimate Outcome:** This builds massive authority, making client acquisition easier and establishing you as a leader.
+This is your "media magnet" — the most press-worthy part of your project that makes publishers say yes.
 
-### 3. Your First Step
-Conclude with a powerful, direct statement that this entire chain reaction starts with one strategic decision: getting published on the world's most trusted sites.
+### Your Visibility Blueprint
 
-Keep the entire report under 400 words. Be direct, insightful, and highly persuasive.
+We've matched this to crypto-specific Google News sites + trusted mainstream platforms like AP News, Business Insider & CoinDesk.
+
+Explain how promoting this specific service creates a powerful visibility chain reaction:
+- **Getting featured** on these trusted crypto and mainstream outlets
+- **This triggers** higher search rankings and increased organic visibility
+- **Potential customers** searching for solutions now see you as the obvious, trusted choice
+- **AI platforms and algorithms** begin citing you as a trusted source across the web
+- **The result:** Massive authority that makes client acquisition effortless
+
+🛡️ These placements aren't open to everyone. But they are to you (for now).
+
+Keep the entire report under 350 words. Be direct, insightful, and highly persuasive. Focus on showing them exactly where their project can appear and why that matters.
 
 Here is the user's data:
 - Website: ${websiteUrl}
@@ -181,20 +184,58 @@ async function runAnalysis(websiteUrl, services) {
   loadingIndicator?.classList.remove('hidden');
   resultsContainer?.classList.remove('hidden');
 
-  // Loading messages
+  // Loading messages - updated with new rotating copy
   const loadingMessages = [
-    "Analyzing your website and services...",
-    "Identifying your strategic advantage...",
-    "Consulting market trends...",
-    "Building your Authority Playbook...",
+    "Analyzing Market Signals & Media Openings...",
+    "Identifying which of your services will attract the most media trust...",
+    "Scanning crypto media to match your offer with publisher demand...",
+    "Locating high-authority sites that would feature your brand...",
+    "Mapping visibility pathways across 75+ crypto news outlets...",
   ];
-  let messageIndex = 0;
-  const messageInterval = setInterval(() => {
-    messageIndex = (messageIndex + 1) % loadingMessages.length;
-    if (loadingText) loadingText.textContent = loadingMessages[messageIndex];
-  }, 2500);
+  
+  // Service scanning effect for auto-started analysis
+  let servicesScanningInterval;
+  const urlParams = new URLSearchParams(window.location.search);
+  const servicesParam = urlParams.get('services');
+  
+  if (servicesParam) {
+    const servicesList = servicesParam.split(',').map(s => s.trim());
+    let currentServiceIndex = 0;
+    
+    servicesScanningInterval = setInterval(() => {
+      if (currentServiceIndex < servicesList.length) {
+        const currentService = servicesList[currentServiceIndex];
+        if (loadingText) {
+          loadingText.innerHTML = `Scanning: <span style="color: #00d4ff; font-weight: 600;">${currentService}</span>`;
+        }
+        currentServiceIndex++;
+      } else {
+        // After scanning all services, show regular rotating messages
+        let messageIndex = 0;
+        const messageInterval = setInterval(() => {
+          messageIndex = (messageIndex + 1) % loadingMessages.length;
+          if (loadingText) loadingText.textContent = loadingMessages[messageIndex];
+        }, 1500);
+        
+        // Store interval to clear it later
+        servicesScanningInterval = messageInterval;
+      }
+    }, 800);
+  } else {
+    // Regular rotating messages for manual analysis
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+      messageIndex = (messageIndex + 1) % loadingMessages.length;
+      if (loadingText) loadingText.textContent = loadingMessages[messageIndex];
+    }, 2500);
+    servicesScanningInterval = messageInterval;
+  }
 
   try {
+    // Add minimum delay to show rotating messages
+    const minDisplayTime = 6000; // 6 seconds
+    const startTime = Date.now();
+    
     const prompt = createPrompt(websiteUrl, services);
     const responseStream = await ai.models.generateContentStream({
       model: 'gemini-2.5-flash',
@@ -208,6 +249,12 @@ async function runAnalysis(websiteUrl, services) {
         resultsContainer.innerHTML = marked.parse(fullResponse) as string;
         enhanceResultsFormatting();
       }
+    }
+    
+    // Ensure minimum display time has passed
+    const elapsedTime = Date.now() - startTime;
+    if (elapsedTime < minDisplayTime) {
+      await new Promise(resolve => setTimeout(resolve, minDisplayTime - elapsedTime));
     }
   } catch (error) {
     console.error("Error during Gemini API call:", error);
@@ -227,14 +274,14 @@ async function runAnalysis(websiteUrl, services) {
       resultsContainer.innerHTML = errorMessage + '<button onclick="location.reload()" style="margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Try Again</button>';
     }
   } finally {
-    clearInterval(messageInterval);
+    clearInterval(servicesScanningInterval);
     loadingIndicator?.classList.add('hidden');
     ctaContainer?.classList.remove('hidden');
   }
 }
 
 /**
- * Parses URL parameters and pre-fills form fields for personalized outreach.
+ * Parses URL parameters, pre-fills form fields, and auto-starts analysis for personalized outreach.
  */
 function parseUrlParameters() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -257,6 +304,22 @@ function parseUrlParameters() {
     console.log('Prospect email:', email);
     // You can use this email in the analysis prompt if needed
     (window as any).prospectEmail = email;
+  }
+
+  // Auto-start analysis if both URL and services are provided (personalized link)
+  if (companyUrl && services) {
+    // Wait a brief moment for DOM to be ready, then auto-start
+    setTimeout(() => {
+      // Track analysis started for auto-start
+      trackUserInteraction('analysis_started', {
+        websiteUrl: companyUrl,
+        servicesCount: services.split(',').length,
+        servicesLength: services.length,
+        autoStarted: true
+      });
+
+      runAnalysis(companyUrl, services);
+    }, 500);
   }
 }
 
